@@ -9,7 +9,7 @@ class Task {
 let tasks = [];
 
 function addListeners() {
-    addButton.onclick = function() {
+    addButton.onclick = function () {
         addNewTaskToList();
     }
 }
@@ -25,10 +25,11 @@ function addNewTaskToList() {
     }
 }
 
+// Use createNode instead of putting everything in a string and using innerHTML
 function populate() {
     if (tasks.length > 0) {
         let str = "<ul>";
-        tasks.forEach(function(task) {
+        tasks.forEach(function (task) {
             str += "<li>" + task.taskText;
             str += "<button class='editBtn'>Edit</button>";
             str += "<button class='deleteBtn'>Delete</button>";
@@ -44,7 +45,7 @@ function populate() {
 // Add edit function
 // Add delete function
 
-window.onload = function() {
+window.onload = function () {
     addListeners();
     populate();
 }
