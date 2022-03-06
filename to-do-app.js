@@ -1,12 +1,6 @@
 const addButton = document.getElementById("addBtn");
 
-class Task {
-    constructor(taskText) {
-        this.taskText = taskText;
-    }
-}
-
-let tasks = [];
+let count = 0;
 
 function addListeners() {
     addButton.onclick = function () {
@@ -15,37 +9,80 @@ function addListeners() {
 }
 
 function addNewTaskToList() {
-    let taskText = document.getElementById("taskText");
-    if (taskText.value === null || taskText.value === undefined || taskText.value === "") {
+    let taskTextDom = document.getElementById("taskText");
+    let taskText = taskTextDom.value;
+    console.log(taskText, taskTextDom);
+    if (taskText === null || taskText === undefined || taskText === "") {
         return;
     } else {
-        tasks.push(new Task(taskText.value));
-        populate();
-        taskText.value = "";
+        count++;
+        populate(taskText);
+        taskTextDom.value = '';
     }
 }
 
-// Use createNode instead of putting everything in a string and using innerHTML
-function populate() {
-    if (tasks.length > 0) {
-        let str = "<ul>";
-        tasks.forEach(function (task) {
-            str += "<li>" + task.taskText;
-            str += "<button class='editBtn'>Edit</button>";
-            str += "<button class='deleteBtn'>Delete</button>";
-            str += "</li>";
-        });
-        str += "</ul>";
-        document.getElementById("tasksList").innerHTML = str;
-    } else {
-        return;
-    }
+function populate(taskText) {
+    // Get DOM element where tasks are placed
+    let ul = document.getElementById('taskUl');
+
+    // Create new 'parent' DOM element
+    let li = document.createElement('li');
+    li.setAttribute('id', 'li' + count);
+
+    // Create new label and add properties
+    // This will hold the text of the to-do
+    let label = document.createElement('label');
+    label.setAttribute('id', 'label' + count);
+    label.appendChild(document.createTextNode(taskText));
+
+    // Create new edit button
+    // Add ID (to uniquely identify it) and class (to theme it via CSS)
+    let editBtn = document.createElement('button');
+    editBtn.appendChild(document.createTextNode('Edit'));
+    editBtn.setAttribute('id', 'editBtn' + count);
+    editBtn.setAttribute('class', 'editBtn');
+    editBtn.addEventListener('click', function () {
+        editTask('editBtn' + count);
+    });
+
+    // Create new delete button
+    // Add ID (to uniquely identify it) and class (to theme it via CSS)
+    // Add event listener to run delete function
+    let deleteBtn = document.createElement('button');
+    deleteBtn.appendChild(document.createTextNode('Delete'));
+    deleteBtn.setAttribute('id', 'deleteBtn' + count);
+    deleteBtn.setAttribute('class', 'deleteBtn');
+    deleteBtn.addEventListener('click', function () {
+        deleteTask('deleteBtn' + count);
+    });
+
+    // Add label and edit and delete buttons to li
+    // Add li to ul
+    // The structure looks something like this - ul -> li -> {label,editBtn,deleteBtn}
+    li.appendChild(label);
+    li.appendChild(editBtn);
+    li.appendChild(deleteBtn);
+    ul.appendChild(li);
 }
 
-// Add edit function
-// Add delete function
+// Update edit function
+// Listener on ADD button needs to be modified on the fly (edit in case of edit, add in case of no edit)
+function editTask(editBtnId) {
+    // Get count of ID
+    let labelId = editBtnId.match(/\d+/)[0];
+    let taskText = document.getElementById('label' + labelId);
+    let editTextField = document.getElementById('taskText');
+    editTextField.value = taskText.innerText;
+    taskText.innerText = editTextField.innerText;
+
+}
+
+function deleteTask(deleteBtnId) {
+    let labelId = deleteBtnId.match(/\d+/)[0];
+    let liToDelete = document.getElementById('li' + labelId);
+    liToDelete.remove();
+}
 
 window.onload = function () {
     addListeners();
-    populate();
 }
