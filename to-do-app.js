@@ -10,10 +10,6 @@ function addNewTaskToList() {
     if (taskText === null || taskText === undefined || taskText === "") {
         return;
     } else {
-
-        // Increment count (a new entry is to be added)
-        count++;
-
         // Handler function to add task to list
         populate(taskText);
         taskTextDom.value = '';
@@ -22,6 +18,9 @@ function addNewTaskToList() {
 
 // Handler function for adding tasks
 function populate(taskText) {
+
+    // Increment count (a new entry is to be added)
+    count++;
 
     // Get DOM element where tasks are placed
     let ul = document.getElementById('taskUl');
@@ -95,11 +94,10 @@ function editTask(editBtnId) {
 
                 // Remove listener
                 this.removeEventListener('keydown', handler);
-
-                // Enable all buttons
-                disableAllButtons(false);
                 taskTextDom.value = '';
             }
+            // Enable all buttons
+            disableAllButtons(false);
         }
     });
 
@@ -133,6 +131,8 @@ function disableAllButtons(disable) {
 
 // Call an event to listen to clicks on add function
 window.onload = function () {
+    populate('Task 1');
+    populate('Task 2');
     document.getElementById("addBtn").onclick = function () {
         addNewTaskToList();
     }
