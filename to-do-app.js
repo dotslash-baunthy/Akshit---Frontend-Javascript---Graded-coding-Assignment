@@ -1,26 +1,26 @@
 const addButton = document.getElementById("addBtn");
 
+// Variable to count the number of entries
+// This is used to assign unique IDs on labels, delete and edit buttons
 let count = 0;
 
-function addListeners() {
-    addButton.onclick = function () {
-        addNewTaskToList();
-    }
-}
-
+// Function to add new task to the list
+// This will in turn call the populate function which will do the actual addition
 function addNewTaskToList() {
     let taskTextDom = document.getElementById("taskText");
     let taskText = taskTextDom.value;
-    console.log(taskText, taskTextDom);
     if (taskText === null || taskText === undefined || taskText === "") {
         return;
     } else {
+        // Increment count (a new entry is to be added)
         count++;
+        // Handler function to add task to list
         populate(taskText);
         taskTextDom.value = '';
     }
 }
 
+// Handler function for adding tasks
 function populate(taskText) {
     // Get DOM element where tasks are placed
     let ul = document.getElementById('taskUl');
@@ -65,24 +65,41 @@ function populate(taskText) {
     ul.appendChild(li);
 }
 
-// Update edit function
-// Listener on ADD button needs to be modified on the fly (edit in case of edit, add in case of no edit)
+// Function to edit tasks
+// The event to listen for is enter
 function editTask(editBtnId) {
-    // Get count of ID
-    let labelId = editBtnId.match(/\d+/)[0];
-    let taskText = document.getElementById('label' + labelId);
-    let editTextField = document.getElementById('taskText');
-    editTextField.value = taskText.innerText;
-    taskText.innerText = editTextField.innerText;
 
+    // Get count of ID
+    let labelNumber = editBtnId.match(/\d+/)[0];
+
+    // Get label which needs to be edited
+    let labelDom = document.getElementById('label' + labelNumber);
+
+    // Get task input field
+    let taskTextDom = document.getElementById("taskText");
+
+    // Add event listener to execute on press of enter
+    taskTextDom.addEventListener('keydown', function handler(e) {
+        if (e.key === 'Enter') {
+            labelDom.innerText = taskTextDom.value;
+            this.removeEventListener('keydown', handler);
+            taskTextDom.value = '';
+        }
+    });
+    // Enter value of task input field (which will be empty at this time) with innerText of label
+    taskTextDom.value = labelDom.innerText;
 }
 
+// Function to delete tasks
 function deleteTask(deleteBtnId) {
     let labelId = deleteBtnId.match(/\d+/)[0];
     let liToDelete = document.getElementById('li' + labelId);
     liToDelete.remove();
 }
 
+// Call an event to listen to clicks on add function
 window.onload = function () {
-    addListeners();
+    addButton.onclick = function () {
+        addNewTaskToList();
+    }
 }
