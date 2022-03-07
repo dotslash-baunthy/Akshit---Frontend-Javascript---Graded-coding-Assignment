@@ -12,8 +12,10 @@ function addNewTaskToList() {
     if (taskText === null || taskText === undefined || taskText === "") {
         return;
     } else {
+
         // Increment count (a new entry is to be added)
         count++;
+
         // Handler function to add task to list
         populate(taskText);
         taskTextDom.value = '';
@@ -22,6 +24,7 @@ function addNewTaskToList() {
 
 // Handler function for adding tasks
 function populate(taskText) {
+
     // Get DOM element where tasks are placed
     let ul = document.getElementById('taskUl');
 
@@ -69,6 +72,9 @@ function populate(taskText) {
 // The event to listen for is enter
 function editTask(editBtnId) {
 
+    // Disable all buttons
+    disableAllButtons(true);
+
     // Get count of ID
     let labelNumber = editBtnId.match(/\d+/)[0];
 
@@ -81,11 +87,24 @@ function editTask(editBtnId) {
     // Add event listener to execute on press of enter
     taskTextDom.addEventListener('keydown', function handler(e) {
         if (e.key === 'Enter') {
-            labelDom.innerText = taskTextDom.value;
-            this.removeEventListener('keydown', handler);
-            taskTextDom.value = '';
+
+            // If new value of edited task is empty, delete the task
+            if (taskTextDom.value === undefined || taskTextDom.value === null || taskTextDom.value === "") {
+                deleteTask(labelNumber);
+            }
+            else {
+                labelDom.innerText = taskTextDom.value;
+
+                // Remove listener
+                this.removeEventListener('keydown', handler);
+
+                // Enable all buttons
+                disableAllButtons(false);
+                taskTextDom.value = '';
+            }
         }
     });
+
     // Enter value of task input field (which will be empty at this time) with innerText of label
     taskTextDom.value = labelDom.innerText;
 }
@@ -95,6 +114,23 @@ function deleteTask(deleteBtnId) {
     let labelId = deleteBtnId.match(/\d+/)[0];
     let liToDelete = document.getElementById('li' + labelId);
     liToDelete.remove();
+}
+
+// Function to enable or disable all buttons on the page
+function disableAllButtons(disable) {
+    let buttons = document.querySelectorAll('button');
+    if (disable) {
+        buttons.forEach((button) => {
+            button.disabled = true;
+            button.classList.add('disableBtnOnEdit');
+        });
+    }
+    else {
+        buttons.forEach((button) => {
+            button.disabled = false;
+            button.classList.remove('disableBtnOnEdit');
+        });
+    }
 }
 
 // Call an event to listen to clicks on add function
