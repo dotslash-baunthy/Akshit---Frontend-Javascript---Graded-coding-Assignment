@@ -1,5 +1,3 @@
-const addButton = document.getElementById("addBtn");
-
 // Variable to count the number of entries
 // This is used to assign unique IDs on labels, delete and edit buttons
 let count = 0;
@@ -135,7 +133,7 @@ function disableAllButtons(disable) {
 
 // Call an event to listen to clicks on add function
 window.onload = function () {
-    addButton.onclick = function () {
+    document.getElementById("addBtn").onclick = function () {
         addNewTaskToList();
     }
 }
