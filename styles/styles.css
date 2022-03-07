@@ -1,0 +1,38 @@
+h1 {
+  color: #4f46e5;
+}
+
+#addBtn {
+  border: 0;
+  line-height: 1.5;
+  padding: 0 20px;
+  text-align: center;
+  color: #ffffff;
+  background-color: #4f46e5;
+}
+
+ul {
+  list-style: none;
+}
+
+.editBtn {
+  border: 0;
+  line-height: 1.5;
+  padding: 0 20px;
+  text-align: center;
+  background-color: #059669;
+  color: #ffffff;
+}
+
+.deleteBtn {
+  border: 0;
+  line-height: 1.5;
+  padding: 0 20px;
+  text-align: center;
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+.disableBtnOnEdit {
+  cursor: not-allowed;
+}
