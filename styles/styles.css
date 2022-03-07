@@ -1,34 +1,38 @@
 h1 {
-    color: #4F46E5;
+  color: #4f46e5;
 }
 
 #addBtn {
-    border: 0;
-    line-height: 1.5;
-    padding: 0 20px;
-    text-align: center;
-    color: #FFFFFF;
-    background-color: #4F46E5;
+  border: 0;
+  line-height: 1.5;
+  padding: 0 20px;
+  text-align: center;
+  color: #ffffff;
+  background-color: #4f46e5;
 }
 
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 .editBtn {
-    border: 0;
-    line-height: 1.5;
-    padding: 0 20px;
-    text-align: center;
-    background-color: #059669;
-    color: #FFFFFF;
+  border: 0;
+  line-height: 1.5;
+  padding: 0 20px;
+  text-align: center;
+  background-color: #059669;
+  color: #ffffff;
 }
 
 .deleteBtn {
-    border: 0;
-    line-height: 1.5;
-    padding: 0 20px;
-    text-align: center;
-    background-color: #EF4444;
-    color: #FFFFFF;
+  border: 0;
+  line-height: 1.5;
+  padding: 0 20px;
+  text-align: center;
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+.disableBtnOnEdit {
+  cursor: not-allowed;
 }
